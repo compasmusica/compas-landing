@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compás — Encuentra tu profesor de música en Lima</title>
+<meta name="description" content="Busca profesor de música por instrumento, zona y precio. Egresados y estudiantes de la UNM. Pagas dentro de la app, solo cuando tu clase esté confirmada.">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#FBF8F2;
+    --ink-2:#FFFFFF;
+    --paper:#F6F1E7;
+    --paper-dim:#e9e2d3;
+    --brass:#B8863A;
+    --brass-bright:#D9A64F;
+    --teal:#2F5D8A;
+    --teal-bright:#4A7FB5;
+    --text-warm:#20242E;
+    --text-dim:#6B6B72;
+    --radius:14px;
+    --shadow:0 8px 24px rgba(32,36,46,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--ink); color:var(--text-warm);
+    font-family:'Work Sans',sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; margin:0; color:var(--text-warm);}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:760px; margin:0 auto; padding:0 22px;}
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(180deg,var(--paper) 0%, var(--ink) 100%);
+    padding:56px 0 40px; text-align:center; border-bottom:1px solid var(--paper-dim);
+  }
+  .hero img{width:88px; height:88px; border-radius:22px; box-shadow:var(--shadow); margin-bottom:22px;}
+  .hero .eyebrow{
+    font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--brass);
+    font-weight:600; margin-bottom:14px;
+  }
+  .hero h1{font-size:36px; line-height:1.18; letter-spacing:-0.5px;}
+  .hero h1 em{font-style:italic; color:var(--brass);}
+  .hero p.lead{
+    font-size:16.5px; color:var(--text-dim); max-width:500px; margin:18px auto 30px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:15px 30px; border-radius:100px; font-family:'Work Sans'; font-weight:600;
+    font-size:15px; text-decoration:none; border:none; cursor:pointer; transition:transform .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-brass{background:linear-gradient(135deg,var(--brass-bright),var(--brass)); color:#2a1c05; box-shadow:0 6px 18px rgba(184,134,58,0.35);}
+  .btn-outline{background:transparent; border:1.5px solid var(--text-warm); color:var(--text-warm);}
+  .hero-ctas{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+
+  /* ---------- FRANJA DE PRECIO HONESTO ---------- */
+  .precio-strip{background:var(--text-warm); padding:16px 0;}
+  .precio-strip .wrap{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; text-align:center;}
+  .precio-strip p{margin:0; color:#F4F1EA; font-size:13.5px;}
+  .precio-strip b{color:var(--brass-bright);}
+
+  /* ---------- VIDEO ---------- */
+  .video-section{padding:48px 0 52px;}
+  .video-eyebrow{text-align:center; margin-bottom:18px;}
+  .video-frame{
+    position:relative; width:100%; height:0; padding-bottom:56.25%; border-radius:16px; overflow:hidden;
+    box-shadow:var(--shadow); background:var(--paper-dim);
+  }
+  .video-frame iframe{position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%; border:none;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:52px 0;}
+  section.alt{background:var(--paper);}
+  .section-eyebrow{
+    font-size:11.5px; letter-spacing:2px; text-transform:uppercase; color:var(--teal);
+    font-weight:600; margin-bottom:10px;
+  }
+  section h2{font-size:27px; margin-bottom:14px; letter-spacing:-0.3px;}
+  section > .wrap > p.intro{color:var(--text-dim); font-size:15px; max-width:560px; margin-bottom:32px;}
+
+  /* ---------- PROCESO (secuencia real) ---------- */
+  .proceso{display:flex; flex-direction:column; gap:0;}
+  .paso{display:flex; gap:18px; padding:22px 0; border-bottom:1px solid var(--paper-dim);}
+  .paso:last-child{border-bottom:none;}
+  .paso-num{
+    font-family:'Fraunces',serif; font-size:26px; color:var(--brass-bright); font-weight:600;
+    flex-shrink:0; width:38px;
+  }
+  .paso-body h3{font-size:16.5px; margin-bottom:5px;}
+  .paso-body p{font-size:14px; color:var(--text-dim); margin:0;}
+
+  /* ---------- NUBE DE INSTRUMENTOS (no es secuencia, sin numeración) ---------- */
+  .chip-cloud{display:flex; flex-wrap:wrap; gap:9px;}
+  .chip{
+    background:var(--ink-2); border:1px solid var(--paper-dim); border-radius:100px;
+    padding:9px 16px; font-size:13.5px; color:var(--text-warm); white-space:nowrap;
+  }
+  .chip.mas{background:none; border:1px dashed var(--text-dim); color:var(--text-dim);}
+
+  /* ---------- SEGURIDAD / CONFIANZA ---------- */
+  .seguridad-box{
+    background:var(--ink-2); border:1.5px solid var(--teal); border-radius:16px;
+    padding:30px 26px; margin-top:8px;
+  }
+  .seguridad-box h3{font-size:19px; color:var(--teal); margin-bottom:6px;}
+  .seguridad-box > p.lead-sm{font-size:14px; color:var(--text-dim); margin:0 0 20px;}
+  .regla{display:flex; gap:14px; padding:13px 0; border-top:1px solid var(--paper-dim);}
+  .regla:first-of-type{border-top:none;}
+  .regla-num{
+    width:26px; height:26px; border-radius:50%; background:var(--teal); color:#F4F1EA;
+    font-family:'IBM Plex Mono'; font-size:12.5px; font-weight:600; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .regla p{margin:0; font-size:14px; color:var(--text-warm); line-height:1.5;}
+
+  /* ---------- MODALIDADES ---------- */
+  .tipos-grid{display:grid; grid-template-columns:1fr; gap:12px; margin-top:8px;}
+  .tipo-card{background:var(--ink-2); border:1px solid var(--paper-dim); border-radius:12px; padding:16px 18px;}
+  .tipo-card .tipo-name{font-weight:700; font-size:14.5px; color:var(--teal); margin-bottom:4px;}
+  .tipo-card p{font-size:13px; color:var(--text-dim); margin:0;}
+
+  /* ---------- ACORDEÓN ---------- */
+  .faq-group{margin-bottom:34px;}
+  .faq-group-title{
+    font-family:'IBM Plex Mono'; font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--brass); margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--brass);
+    display:inline-block;
+  }
+  .faq-item{
+    background:var(--ink-2); border:1px solid var(--paper-dim); border-radius:12px;
+    margin-bottom:10px; overflow:hidden;
+  }
+  .faq-q{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding:16px 18px; cursor:pointer; font-weight:600; font-size:14.5px; user-select:none;
+  }
+  .faq-q .chev{color:var(--teal); font-size:13px; flex-shrink:0; transition:transform .2s ease;}
+  .faq-item.open .chev{transform:rotate(180deg);}
+  .faq-a{
+    max-height:0; overflow:hidden; transition:max-height .25s ease, padding .25s ease;
+    padding:0 18px; font-size:13.8px; color:var(--text-dim);
+  }
+  .faq-item.open .faq-a{max-height:400px; padding:0 18px 18px;}
+
+  /* ---------- COMPARTE / SOPORTE ---------- */
+  .comparte-wrap{display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px;}
+  .comparte-wrap p.lead-sm{font-size:14.5px; color:var(--text-dim); max-width:480px; margin:0;}
+
+  /* ---------- CTA FINAL ---------- */
+  .cta-final{
+    text-align:center; padding:60px 0; background:linear-gradient(135deg,var(--teal),#1f4166); color:#F4F1EA;
+  }
+  .cta-final h2{color:#F4F1EA; font-size:26px; margin-bottom:12px;}
+  .cta-final p{color:rgba(244,241,234,0.8); font-size:14.5px; margin-bottom:26px;}
+  .cta-final .btn-brass{box-shadow:0 6px 20px rgba(0,0,0,0.25);}
+
+  footer{padding:30px 0; text-align:center; font-size:12px; color:var(--text-dim);}
+
+  @media(max-width:480px){
+    .hero h1{font-size:28px;}
+    .hero{padding:44px 0 32px;}
+    section{padding:40px 0;}
+    section h2{font-size:22px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <img src="icon-512.png" alt="Compás">
+      <div class="eyebrow">Clases de música en Lima · Compás</div>
+      <h1>Encuentra tu profesor<br><em>de confianza.</em></h1>
+      <p class="lead">Busca por instrumento, zona y precio entre profesores egresados y estudiantes de la Universidad Nacional de Música. Pagas dentro de la app — nunca antes de que tu clase esté confirmada.</p>
+      <div class="hero-ctas">
+        <a href="index.html" class="btn btn-brass">Buscar profesor →</a>
+        <a href="#como-funciona" class="btn btn-outline">Ver cómo funciona</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="precio-strip">
+    <div class="wrap">
+      <p>💳 Pagas <b>exactamente</b> la tarifa que ves en el perfil del profesor — sin comisiones ni cargos ocultos para ti.</p>
+    </div>
+  </div>
+
+  <section class="video-section">
+    <div class="wrap">
+      <div class="video-eyebrow">
+        <div class="section-eyebrow" style="justify-content:center;">Conócenos</div>
+        <h2 style="font-size:22px;">Compás en 1 minuto</h2>
+      </div>
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/uD67YhXY6FI"
+          title="Compás — Video de presentación"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="section-eyebrow">El proceso</div>
+      <h2>De buscar profesor a tu primera clase</h2>
+      <p class="intro">Cuatro pasos, sin necesidad de crear cuenta hasta que de verdad quieras reservar.</p>
+      <div class="proceso">
+        <div class="paso">
+          <div class="paso-num">01</div>
+          <div class="paso-body">
+            <h3>Exploras perfiles, sin registrarte</h3>
+            <p>Filtra por instrumento, zona y tarifa. Ves experiencia, formación y si el profesor está verificado como egresado o alumno de la UNM.</p>
+          </div>
+        </div>
+        <div class="paso">
+          <div class="paso-num">02</div>
+          <div class="paso-body">
+            <h3>Eliges un horario disponible</h3>
+            <p>Cada profesor publica sus horarios reales. Envías tu solicitud para el día y hora que te sirva.</p>
+          </div>
+        </div>
+        <div class="paso">
+          <div class="paso-num">03</div>
+          <div class="paso-body">
+            <h3>El profesor confirma, tú pagas</h3>
+            <p>Recién cuando el profesor acepta tu horario, pagas por Yape o Plin a la cuenta oficial de Compás — no al profesor directamente.</p>
+          </div>
+        </div>
+        <div class="paso">
+          <div class="paso-num">04</div>
+          <div class="paso-body">
+            <h3>Coordinas por el chat y recibes tu clase</h3>
+            <p>Con el pago confirmado se desbloquea un chat directo con tu profesor para afinar dirección, link de videollamada o cualquier detalle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="section-eyebrow">Catálogo</div>
+      <h2>¿Qué instrumento quieres aprender?</h2>
+      <p class="intro">Piano, cuerdas, vientos, percusión, canto y más — con profesores reales del ecosistema de la UNM.</p>
+      <div class="chip-cloud">
+        <span class="chip">Piano</span>
+        <span class="chip">Guitarra</span>
+        <span class="chip">Canto</span>
+        <span class="chip">Violín</span>
+        <span class="chip">Batería</span>
+        <span class="chip">Cajón</span>
+        <span class="chip">Saxofón</span>
+        <span class="chip">Trompeta</span>
+        <span class="chip">Bajo</span>
+        <span class="chip">Violonchelo</span>
+        <span class="chip">Flauta Traversa</span>
+        <span class="chip">Ukelele</span>
+        <span class="chip">Producción Musical</span>
+        <span class="chip">Solfeo / Teoría</span>
+        <span class="chip mas">+ más de 30 instrumentos</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-eyebrow">Confianza</div>
+      <h2>Tu plata y tus datos, protegidos</h2>
+      <div class="seguridad-box">
+        <h3>Así te cuidamos</h3>
+        <p class="lead-sm">Cuatro reglas que no se negocian, pensadas para que entregar tu plata o la de tu hijo a un desconocido deje de dar miedo.</p>
+        <div class="regla">
+          <div class="regla-num">1</div>
+          <p>El pago nunca va directo al profesor. Va a la cuenta oficial de Compás, y un administrador confirma que todo esté en orden antes de liberar el contacto.</p>
+        </div>
+        <div class="regla">
+          <div class="regla-num">2</div>
+          <p>Cada profesor pasa por una revisión manual antes de aparecer en Explorar — y puede llevar un sello de <b>🥇 Egresado UNM</b> o <b>🎓 Alumno UNM</b> si verificó su carné o constancia.</p>
+        </div>
+        <div class="regla">
+          <div class="regla-num">3</div>
+          <p>Tu dirección exacta recién se comparte cuando el pago ya está confirmado — antes, el profesor solo ve tu distrito general.</p>
+        </div>
+        <div class="regla">
+          <div class="regla-num">4</div>
+          <p>Toda coordinación queda registrada en el chat interno de la app, nunca por WhatsApp personal — así hay historial claro si algo necesita revisarse.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="section-eyebrow">A tu manera</div>
+      <h2>Clases como te acomoden</h2>
+      <div class="tipos-grid">
+        <div class="tipo-card"><div class="tipo-name">Presencial a domicilio</div><p>El profesor va a tu casa. La movilidad, si aplica según tu zona, se muestra clara desde antes de reservar.</p></div>
+        <div class="tipo-card"><div class="tipo-name">Presencial en estudio o local</div><p>Vas tú al espacio del profesor.</p></div>
+        <div class="tipo-card"><div class="tipo-name">Virtual programada</div><p>Clase por videollamada, en el día y hora que acuerden.</p></div>
+        <div class="tipo-card"><div class="tipo-name">Microclase / Asesoría express</div><p>Una duda puntual, una sesión corta — sin comprometerte a un paquete completo.</p></div>
+        <div class="tipo-card"><div class="tipo-name">Compás al instante</div><p>Algunos profesores se marcan disponibles ahora mismo, para una clase urgente en las próximas horas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preguntas">
+    <div class="wrap">
+      <div class="section-eyebrow">Todo lo demás</div>
+      <h2>Preguntas frecuentes</h2>
+      <p class="intro">Lo que la mayoría pregunta antes de reservar su primera clase.</p>
+
+      <div class="faq-group">
+        <div class="faq-group-title">Precios y pagos</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿El precio que veo es el precio final?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Sí. Pagas exactamente la tarifa por hora que el profesor publicó, más la movilidad si pidió clase a domicilio fuera de su zona (se muestra clara antes de confirmar). Compás no te cobra ninguna comisión aparte.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo pago?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Por Yape o Plin, a la cuenta oficial de Compás que te muestra la app al momento de reservar. Subes tu captura de pago y, una vez confirmada, se desbloquea el chat con tu profesor.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Y si necesito cancelar?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Antes de pagar, cancelas tú mismo sin necesidad de avisar a nadie. Si ya pagaste, solicitas la cancelación desde la app y el administrador la revisa.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group">
+        <div class="faq-group-title">Profesores y confianza</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Quiénes pueden ser profesores en Compás?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Egresados y estudiantes de últimos ciclos de la Universidad Nacional de Música. Cada perfil pasa por aprobación manual antes de publicarse, y puede verificar su carné o constancia para llevar el sello correspondiente.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Compás tiene relación oficial con la UNM?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>No. Compás es una iniciativa privada e independiente que conecta a alumnos, egresados y docentes de la UNM con quienes buscan clases — la universidad no participa ni se responsabiliza por el servicio.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Puedo calificar al profesor después de la clase?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Sí, tu calificación queda visible en su perfil y ayuda a que otros alumnos elijan con más información.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group">
+        <div class="faq-group-title">Horarios y modalidades</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Puedo reservar varias semanas seguidas con el mismo profesor?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Sí, puedes reservar un paquete de varias clases en el mismo horario semanal, en vez de pedir cita por cita.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>¿Qué pasa si mi profesor no puede dictar una clase ya confirmada?</span><span class="chev">▾</span></div>
+          <div class="faq-a"><p>Puede ofrecerla a otro profesor del gremio como suplencia, sin compartir tu nombre ni tu dirección hasta que alguien la tome y coordine directo contigo.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="section-eyebrow" style="text-align:center;">¿Alguna duda?</div>
+      <h2 style="text-align:center;">Soporte / Ayuda</h2>
+      <p class="intro" style="text-align:center; margin-left:auto; margin-right:auto;">¿Tienes un problema o alguna duda antes de reservar? Escríbenos directo.</p>
+      <div class="comparte-wrap">
+        <a href="https://wa.me/51901368875" target="_blank" rel="noopener" class="btn btn-brass">💬 Escribir por WhatsApp</a>
+        <p class="lead-sm">Horario de atención: <b>lunes a sábado, 9:00am a 4:00pm</b>. Fuera de este horario, las respuestas pueden demorar un poco más.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-final">
+    <div class="wrap">
+      <h2>¿Listo para empezar a aprender?</h2>
+      <p>Explora perfiles gratis, sin crear cuenta — regístrate recién cuando quieras reservar.</p>
+      <a href="index.html" class="btn btn-brass">Buscar mi profesor →</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      Compás — Clases de música con egresados y estudiantes de la Universidad Nacional de Música, Perú.
+      <p style="margin-top:10px;font-size:11px;line-height:1.6;opacity:0.85;">Compás es una iniciativa privada e independiente. Aunque nuestra plataforma integra y promueve el talento de alumnos, egresados y docentes de la Universidad Nacional de Música (UNM), la institución no posee filiación, auspicio, vinculación institucional, representación ni responsabilidad legal o comercial sobre los servicios, contenidos o actividades prestadas por este emprendimiento.</p>
+    </div>
+  </footer>
+
+<script>
+function toggleFaq(el){
+  const item = el.parentElement;
+  const yaAbierto = item.classList.contains('open');
+  item.classList.toggle('open', !yaAbierto);
+}
+</script>
+</body>
+</html>
